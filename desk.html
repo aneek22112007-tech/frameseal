@@ -4,31 +4,51 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>FrameSeal · Review Desk · Ward 14</title>
-<meta name="theme-color" content="#0e0d0b">
+<meta name="description" content="FrameSeal Office Kit review desk: verify and accept phone-sealed cards. Read-only — cannot mint a seal or override a refusal.">
+<meta name="frameseal-build" content="v2-design-2026-10-04">
+<meta name="theme-color" content="#070706">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="FrameSeal · Review Desk · Ward 14">
+<meta property="og:description" content="Laptop reviews. It cannot mint a seal or override a refusal.">
+<meta property="og:image" content="https://aneek22112007-tech.github.io/frameseal/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="preload" href="assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body class="desk-page">
+<div class="bg-fx" aria-hidden="true"><div class="grid" style="opacity:.5"></div></div>
 <header class="deskbar">
   <div class="wrap">
     <div class="desktitle">
       <a href="index.html" title="FrameSeal home"><img class="logo" src="assets/logo.svg" alt="FrameSeal" style="width:34px;height:34px"></a>
-      <div><h1>REVIEW DESK <span>·</span> WARD 14</h1><div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.08em">OFFICE KIT · JOB: CLOSE GARBAGE TICKET</div></div>
+      <div><h1>REVIEW DESK <span>·</span> WARD 14</h1><div class="sub2">OFFICE KIT · JOB: CLOSE GARBAGE TICKET</div></div>
     </div>
     <div class="r">
       <span class="chip" id="net"></span>
       <span class="chip y">READ-ONLY · CANNOT MINT SEALS</span>
-      <button class="btn small" id="bImport">Import .frameseal.json</button>
+      <button class="btn small primary" id="bImport"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>Import .frameseal.json</button>
       <a class="btn small ghost" href="phone.html" target="_blank" rel="noopener">Open Phone ↗</a>
     </div>
   </div>
 </header>
-<div class="desknote"><div><b>Laptop reviews. Phone seals.</b> This desk verifies and accepts sealed cards only. It cannot create a seal, and a refusal made on the phone cannot be overridden here. No cloud round-trip — cards arrive by file, clipboard, or same-browser handoff.</div></div>
-
+<div class="deskwrap">
+  <div class="desknote"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg><div><b>Laptop reviews. Phone seals.</b> This desk verifies and accepts sealed cards only. It cannot create a seal, and a refusal made on the phone cannot be overridden here. No cloud round-trip — cards arrive by file, clipboard, or same-browser handoff.</div></div>
+  <div class="counters" id="counters">
+    <div class="ctr"><div class="k"><i></i>In queue</div><div class="v" id="cTotal">0</div></div>
+    <div class="ctr s"><div class="k"><i></i>Sealed</div><div class="v" id="cSealed">0</div></div>
+    <div class="ctr f"><div class="k"><i></i>Refused</div><div class="v" id="cRefused">0</div></div>
+    <div class="ctr a"><div class="k"><i></i>Accepted</div><div class="v" id="cAccepted">0</div></div>
+    <div class="ctr t" id="ctrT"><div class="k"><i></i>Tampered</div><div class="v" id="cTampered">0</div></div>
+  </div>
+</div>
 <main class="deskgrid">
   <section class="queue" aria-label="Review queue">
-    <div class="qhead"><h2>Queue · <span id="qCount">0</span></h2><div style="display:flex;gap:6px"><button class="btn small ghost" id="bPaste" title="Paste a seal card JSON from the clipboard">Paste JSON</button><button class="btn small ghost" id="bClear" title="Remove cards sent from the phone or imported">Clear local</button></div></div>
+    <div class="qhead"><h2>Review queue · <span id="qCount">0</span></h2><div style="display:flex;gap:6px"><button class="btn small ghost" id="bPaste" title="Paste a seal card JSON from the clipboard">Paste JSON</button><button class="btn small ghost" id="bClear" title="Remove cards sent from the phone or imported">Clear local</button></div></div>
+    <div class="filters" id="filters"><button data-f="all" class="on">All <em id="fAll">0</em></button><button data-f="sealed">Sealed <em id="fSealed">0</em></button><button data-f="refused">Refused <em id="fRefused">0</em></button><button data-f="tampered">Tampered <em id="fTampered">0</em></button></div>
     <div class="qlist" id="qlist"></div>
     <div class="drop" id="drop">Drop <code>.frameseal.json</code> files here<br><span style="font-size:12px;color:var(--dim)">or use Import · or paste JSON (Ctrl/⌘+V)</span></div>
   </section>

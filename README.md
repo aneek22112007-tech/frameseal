@@ -17,6 +17,8 @@
 
 </div>
 
+<p align="center"><img src="docs/screenshots/landing-hero.png" width="100%" alt="FrameSeal landing page: animated phone auto-playing the four outcomes"></p>
+
 <p align="center">
   <img src="docs/screenshots/phone-desktop-pass.png" width="49%" alt="FrameSeal phone app: PASS · SEALED">
   <img src="docs/screenshots/desk-desktop.png" width="49%" alt="FrameSeal review desk">
@@ -66,6 +68,7 @@ Captured **live**, at **this spot**, of **this scene**. If camera, IMU motion an
   <img src="docs/screenshots/phone-mobile-spoof.png" width="30%" alt="Phone at 390px: REFUSED · SPOOF">
   <img src="docs/screenshots/desk-desktop-edit.png" width="66%" alt="Desk: EDIT card with sealed vs submitted frames">
 </p>
+<p align="center"><img src="docs/screenshots/desk-desktop-tampered.png" width="80%" alt="Desk: an edited card flagged TAMPERED"></p>
 
 ## Architecture
 
@@ -154,7 +157,7 @@ A sketch of the module layout is in [`android/`](android/README.md) — clearly 
 
 ## Run locally
 
-No build step, no dependencies, no CDNs, no analytics.
+No build step, no dependencies, no CDNs, no analytics. The UI font (Inter, SIL OFL — see `assets/fonts/LICENSE-Inter.txt`) is self-hosted and Latin-subset, so the whole app stays offline-capable.
 
 ```bash
 git clone https://github.com/aneek22112007-tech/frameseal && cd frameseal
@@ -169,7 +172,8 @@ phone.html      seal app (judge mode + live sensors)
 desk.html       Office Kit review desk (read-only)
 assets/core.js  SHA-256, dHash, scene, seal card, verify — shared
 assets/phone.js capture, motion/GNSS gates, scenarios
-assets/desk.js  queue, import, verify, accept/blocked
+assets/desk.js  queue, filters, counters, import, verify, accept/blocked
+assets/landing.js hero phone loop, scroll reveal, count-up stats
 sw.js           offline cache (airplane mode)
 android/        production module sketch (plan only)
 ```

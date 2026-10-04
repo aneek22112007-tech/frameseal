@@ -31,8 +31,18 @@
   function msg(t) { $('vfMsg').textContent = t || ''; }
   function stamp(show, ok, text) {
     const s = $('stamp');
-    s.className = 'stampbig ' + (ok ? 'pass' : 'fail') + (show ? ' show' : '');
+    s.className = 'stampbig ' + (ok ? 'pass' : 'fail');
     if (text) s.textContent = text;
+    if (show) { void s.offsetWidth; s.classList.add('show'); }
+  }
+  function vfState(st) {
+    const v = $('vf');
+    v.classList.remove('running', 'sealed', 'refused', 'shake');
+    if (st) { void v.offsetWidth; v.classList.add(st); }
+    if (st === 'refused') v.classList.add('shake');
+  }
+  function haptic(ok) {
+    try { if (navigator.vibrate) navigator.vibrate(ok ? [35, 50, 70] : [140, 70, 140, 70, 220]); } catch (e) { /* not supported */ }
   }
   function setSensors(o) {
     if (o.steps != null) { $('sSteps').textContent = o.steps; $('pSteps').textContent = o.steps + (o.steps === 1 ? ' step' : ' steps'); }
@@ -46,12 +56,17 @@
   function drawSpark() {
     const c = $('spark'), x = c.getContext('2d');
     x.clearRect(0, 0, c.width, c.height);
-    x.strokeStyle = '#f5b700'; x.lineWidth = 2.5; x.beginPath();
-    spark.forEach((v, i) => {
-      const px = (i / 59) * c.width, py = c.height - 4 - Math.min(1, v / 5) * (c.height - 8);
-      i ? x.lineTo(px, py) : x.moveTo(px, py);
-    });
-    x.stroke();
+    if (!spark.length) { x.strokeStyle = 'rgba(255,255,255,.12)'; x.lineWidth = 2; x.beginPath(); x.moveTo(0, c.height - 5); x.lineTo(c.width, c.height - 5); x.stroke(); return; }
+    const pts = spark.map((v, i) => [(i / 59) * c.width, c.height - 5 - Math.min(1, v / 5) * (c.height - 10)]);
+    const g = x.createLinearGradient(0, 0, 0, c.height);
+    g.addColorStop(0, 'rgba(245,183,0,.45)'); g.addColorStop(1, 'rgba(245,183,0,0)');
+    x.beginPath(); x.moveTo(pts[0][0], c.height);
+    pts.forEach((p) => x.lineTo(p[0], p[1]));
+    x.lineTo(pts[pts.length - 1][0], c.height); x.closePath(); x.fillStyle = g; x.fill();
+    x.beginPath(); pts.forEach((p, i) => (i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])));
+    x.strokeStyle = '#f5b700'; x.lineWidth = 2.5; x.lineJoin = 'round'; x.stroke();
+    const h = pts[pts.length - 1];
+    x.beginPath(); x.arc(h[0] - 3, h[1], 4, 0, 7); x.fillStyle = '#ffd23f'; x.fill();
   }
   function clearResult() { $('result').className = 'result'; $('bTamper').classList.add('hidden'); state.card = null; }
   function showResult(card) {
@@ -66,6 +81,9 @@
     $('rTs').textContent = new Date(card.timestamp).toLocaleString();
     $('bTamper').classList.toggle('hidden', !ok);
     stamp(true, ok, ok ? 'SEALED' : 'REFUSED');
+    vfState(ok ? 'sealed' : 'refused');
+    haptic(ok);
+    if (!ok) { const r = $('result'); r.classList.remove('shake'); void r.offsetWidth; r.classList.add('shake'); }
     setTimeout(() => { const r = $('result'); if (r.scrollIntoView) r.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 250);
   }
 
@@ -91,7 +109,7 @@
   }
   function resetRun() {
     state.token++;
-    renderChecks(); clearResult(); stamp(false, true); msg('');
+    renderChecks(); clearResult(); stamp(false, true); msg(''); vfState(null);
     vf.src = null; vf.zoom = 1; vf.dx = 0; vf.dy = 0;
     base = FSX.sceneFrame(null);
     spark.length = 0; drawSpark();
@@ -106,6 +124,7 @@
     const sc = FSX.SCENARIOS[key];
     document.querySelectorAll('#scen button').forEach((b) => b.classList.toggle('active', b.dataset.k === key));
     const gal = key === 'GALLERY';
+    vfState('running');
     $('pSrc').textContent = gal ? 'GALLERY FILE' : 'SIM CAMERA';
     pill('pLive', gal ? 'FILE' : 'LIVE', gal ? 'idle' : '');
     if (gal) { vf.src = galleryCanvas(); msg('Picked IMG_20261001_0912.jpg from gallery'); }
@@ -167,9 +186,9 @@
       // show the honest seal first, then the edited after-photo being submitted
       await FSX.sleep(400); if (!alive()) return;
       setCheck('hash_on_device', 'pass', 'SHA-256 written locally');
-      stamp(true, true, 'SEALED');
-      await FSX.sleep(900); if (!alive()) return;
-      stamp(false, true);
+      stamp(true, true, 'SEALED'); vfState('sealed'); haptic(true);
+      await FSX.sleep(1000); if (!alive()) return;
+      stamp(false, true); vfState('running');
       msg('After-photo submitted to close the ticket…');
       setCheck('edit_check', 'run', 'comparing to sealed frame…');
       const ed = FSX.newFrameCanvas(); vf.zoom = 1; vf.src = ed;
@@ -193,7 +212,7 @@
     const sealed = state.card, frame = state.frame;
     if (!sealed || !frame || sealed.verdict !== 'SEALED') return;
     state.token++; const my = state.token;
-    $('result').className = 'result'; stamp(false, true);
+    $('result').className = 'result'; stamp(false, true); vfState('running');
     msg('Inpainting the heap out of the after-photo…');
     setCheck('edit_check', 'run', 'comparing to sealed frame…');
     const ed = FSX.newFrameCanvas(); vf.zoom = 1; vf.dx = vf.dy = 0; vf.src = ed;
@@ -315,6 +334,7 @@
     }
     L.started = performance.now();
     pill('pLive', 'LIVE', '');
+    vfState('running');
     msg('Walk ~2 steps toward the subject');
     setCheck('motion', 'run', 'walk ~2 steps…'); setCheck('gnss_agrees', 'run', 'acquiring fix…');
     $('bSeal').disabled = false; $('bStart').textContent = '▶ Restart capture';

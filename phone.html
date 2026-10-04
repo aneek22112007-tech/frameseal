@@ -4,16 +4,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>FrameSeal · Phone (Seal)</title>
-<meta name="theme-color" content="#0c0b09">
+<meta name="description" content="FrameSeal phone: capture live, check IMU + GNSS, seal on device — or refuse and name the failed check.">
+<meta name="frameseal-build" content="v2-design-2026-10-04">
+<meta name="theme-color" content="#070706">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="FrameSeal · Phone (Seal)">
+<meta property="og:description" content="Seal the frame on the phone before it can be swapped, spoofed, or edited.">
+<meta property="og:image" content="https://aneek22112007-tech.github.io/frameseal/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="preload" href="assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body class="phone-page">
+<div class="bg-fx" aria-hidden="true"><div class="grid"></div><div class="orb o1"></div></div>
 <div class="stage">
   <aside class="side">
     <a class="brand" href="index.html"><img class="logo" src="assets/logo.svg" alt=""> Frame<b>Seal</b></a>
-    <h1>The phone decides before the photo leaves.</h1>
+    <span class="eyebrow">Phone · Seal</span>
+    <h1>The phone decides <em>before</em> the photo leaves.</h1>
     <p>Captured live, at this spot, of this scene — or it refuses and names the failed check. Nothing in the seal path touches the network.</p>
     <ol class="steps">
       <li><b>Judge mode</b> runs the four scripted outcomes on a built-in Ward 14 scene.</li>
@@ -21,9 +33,11 @@
       <li><b>Send to desk</b>, then open the <a href="desk.html" target="_blank" rel="noopener">Review Desk ↗</a> in this browser.</li>
       <li>On a phone, switch to <b>Live sensors</b>: real rear camera, accelerometer steps and GPS.</li>
     </ol>
+    <div class="sidelinks"><a class="btn small" href="desk.html" target="_blank" rel="noopener">Open Review Desk ↗</a><a class="btn small ghost" href="index.html">← Overview</a></div>
   </aside>
 
   <div class="device">
+    <span class="sb a"></span><span class="sb b"></span><span class="sb c"></span>
     <div class="screen">
       <div class="statusbar"><span id="clock">--:--</span><span class="r">
         <svg width="17" height="11" viewBox="0 0 17 11" fill="#f4efe4"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1" opacity=".35"/></svg>
@@ -48,7 +62,7 @@
         <div class="vf" id="vf">
           <canvas id="vfc" width="480" height="360" aria-label="Viewfinder"></canvas>
           <video id="video" playsinline muted autoplay class="hidden"></video>
-          <div class="corners"></div>
+          <div class="scan"></div><div class="flash"></div><div class="corners"></div>
           <div class="ov"><span class="pill idle" id="pLive"><span class="dot"></span><span>READY</span></span><span class="pill" id="pGnss">GNSS —</span></div>
           <div class="bot"><span class="pill" id="pSteps">0 steps</span><span class="pill" id="pSrc">SIM CAMERA</span></div>
           <div class="msg" id="vfMsg"></div>
@@ -64,6 +78,7 @@
         <div class="checks" id="checks"></div>
 
         <div class="controls" id="simControls">
+          <div class="ctl-h"><span>Run a scenario</span><span>Ward 14</span></div>
           <div class="scen" id="scen">
             <button class="pass" data-k="PASS"><span class="t">SEAL</span><b>Pass</b><small>Walk 2 steps · live · GNSS agrees</small></button>
             <button class="fail" data-k="GALLERY"><span class="t">REFUSE</span><b>Gallery</b><small>Old file, no capture motion</small></button>
@@ -74,6 +89,7 @@
         </div>
 
         <div class="controls hidden" id="liveControls">
+          <div class="ctl-h"><span>Live sensors</span><span>camera · IMU · GNSS</span></div>
           <div class="liveacts">
             <button class="btn primary wide" id="bStart">▶ Start live capture</button>
             <button class="btn" id="bSeal" disabled>◉ Seal frame</button>
