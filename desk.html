@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>FrameSeal · Review Desk · Ward 14</title>
+<meta name="theme-color" content="#0e0d0b">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="desk-page">
+<header class="deskbar">
+  <div class="wrap">
+    <div class="desktitle">
+      <a href="index.html" title="FrameSeal home"><img class="logo" src="assets/logo.svg" alt="FrameSeal" style="width:34px;height:34px"></a>
+      <div><h1>REVIEW DESK <span>·</span> WARD 14</h1><div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.08em">OFFICE KIT · JOB: CLOSE GARBAGE TICKET</div></div>
+    </div>
+    <div class="r">
+      <span class="chip" id="net"></span>
+      <span class="chip y">READ-ONLY · CANNOT MINT SEALS</span>
+      <button class="btn small" id="bImport">Import .frameseal.json</button>
+      <a class="btn small ghost" href="phone.html" target="_blank" rel="noopener">Open Phone ↗</a>
+    </div>
+  </div>
+</header>
+<div class="desknote"><div><b>Laptop reviews. Phone seals.</b> This desk verifies and accepts sealed cards only. It cannot create a seal, and a refusal made on the phone cannot be overridden here. No cloud round-trip — cards arrive by file, clipboard, or same-browser handoff.</div></div>
+
+<main class="deskgrid">
+  <section class="queue" aria-label="Review queue">
+    <div class="qhead"><h2>Queue · <span id="qCount">0</span></h2><div style="display:flex;gap:6px"><button class="btn small ghost" id="bPaste" title="Paste a seal card JSON from the clipboard">Paste JSON</button><button class="btn small ghost" id="bClear" title="Remove cards sent from the phone or imported">Clear local</button></div></div>
+    <div class="qlist" id="qlist"></div>
+    <div class="drop" id="drop">Drop <code>.frameseal.json</code> files here<br><span style="font-size:12px;color:var(--dim)">or use Import · or paste JSON (Ctrl/⌘+V)</span></div>
+  </section>
+  <section class="detail" id="detail" aria-live="polite"></section>
+</main>
+<input type="file" id="file" accept=".json,application/json" multiple hidden>
+<script src="assets/core.js"></script>
+<script src="assets/desk.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>FrameSeal — seal the frame on the phone</title>
+<meta name="description" content="A field photo is not proof. FrameSeal seals the frame on the phone before it can be swapped, spoofed, or edited. Phone seals. Laptop reviews. Network off.">
+<meta name="theme-color" content="#0c0b09">
+<meta property="og:title" content="FrameSeal — a field photo is not proof">
+<meta property="og:description" content="Seal the frame on the phone before it can be swapped, spoofed, or edited. Phone seals. Laptop reviews. Network off.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="wrap nav">
+  <a class="brand" href="index.html"><img class="logo" src="assets/logo.svg" alt=""> Frame<b>Seal</b></a>
+  <nav class="links">
+    <a class="hide-s" href="#outcomes">Outcomes</a>
+    <a class="hide-s" href="#how">How it works</a>
+    <a class="hide-s" href="#demo">Guided demo</a>
+    <span class="chip" id="net"></span>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">iQOO Hackathon 2026 · Grand Finale · Open Innovation</span>
+    <h1>A field photo is not proof. <em>Seal the frame on the phone</em> before it can be swapped, spoofed, or edited.</h1>
+    <p class="lead">For the reviewer who pays a wage, closes a ward ticket, or releases a delivery. The phone decides before the photo leaves: <b>captured live, at this spot, of this scene</b>. If camera, IMU motion and GNSS disagree, it refuses the seal and names the failed check.</p>
+    <div class="triad"><span><b>Phone</b> seals.</span><span><b>Laptop</b> reviews.</span><span><b>Network</b> off.</span></div>
+    <div class="cta">
+      <a class="primary" href="phone.html">
+        <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></span>
+        <span><strong>Open Phone (Seal)</strong><small>Capture · sensor gates · on-device seal</small></span>
+      </a>
+      <a href="desk.html">
+        <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg></span>
+        <span><strong>Open Laptop (Review Desk)</strong><small>Office Kit · read-only · verify integrity</small></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="outcomes">
+  <div class="wrap">
+    <div class="sec-h">
+      <div><span class="eyebrow">Demo site · Ward 14 · garbage heap · job “Close garbage ticket”</span><h2>Four outcomes. One seal. Three refusals.</h2></div>
+      <p>Sensors refuse first. The hash only checks the edit. Every refusal names the check that failed — and the laptop cannot override it.</p>
+    </div>
+    <div class="outcomes">
+      <div class="oc pass"><span class="stamp">SEALED</span><div class="tag">PASS</div><h3>Sealed</h3><ul><li>Walked ~2 steps</li><li>Live frame</li><li>GNSS agrees</li><li>Hash written</li></ul></div>
+      <div class="oc fail"><span class="stamp">REFUSED</span><div class="tag">REFUSE</div><h3>Gallery</h3><ul><li>No capture motion</li><li>File is old</li><li>Seal blocked</li><li>Reason shown</li></ul></div>
+      <div class="oc fail"><span class="stamp">REFUSED</span><div class="tag">REFUSE</div><h3>Spoof</h3><ul><li>Mock location on</li><li>IMU still</li><li>Signals disagree</li></ul></div>
+      <div class="oc fail"><span class="stamp">REFUSED</span><div class="tag">REFUSE</div><h3>Edit</h3><ul><li>After-photo wiped</li><li>Hash mismatch</li><li>Scene changed</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-h"><div><span class="eyebrow">How it works</span><h2>The phone decides before the photo leaves.</h2></div><p>No cloud call in the seal path. Everything below runs on the device — this prototype runs it in your browser.</p></div>
+    <div class="pipeline">
+      <div class="step"><div class="n">01 · CAPTURE</div><h4>Live camera</h4><p>Frame grabbed from the live stream. There is no gallery path into a seal.</p></div>
+      <div class="step"><div class="n">02 · BODY</div><h4>IMU + GNSS</h4><p>Step/still check from the accelerometer, a GNSS fix, and the two must agree. Disagreement refuses.</p></div>
+      <div class="step"><div class="n">03 · SEAL</div><h4>SHA-256, local</h4><p>Hash of frame bytes + sensor packet, computed on the phone.</p></div>
+      <div class="step"><div class="n">04 · EDIT CHECK</div><h4>Perceptual hash</h4><p>Best-effort dHash compare of the after-photo. Never claims to catch every deepfake.</p></div>
+      <div class="step"><div class="n">05 · DESK</div><h4>Read-only review</h4><p>Laptop verifies and accepts. It cannot mint a seal or override a refusal.</p></div>
+    </div>
+    <div class="rule"><span>Sensors refuse first</span><span>Model/hash only checks the edit</span><span>No cloud call in the seal path</span><span>Works in airplane mode once loaded</span></div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap guide">
+    <div class="panel">
+      <span class="eyebrow">Guided demo · 30 seconds</span>
+      <h3 style="margin-top:8px">Try it as a judge</h3>
+      <ol class="steps">
+        <li>Open <a href="phone.html"><b>Phone (Seal)</b></a>. On a laptop it opens in <b>Judge mode</b> with a built-in Ward 14 scene.</li>
+        <li>Tap <b>Pass</b>, <b>Gallery</b>, <b>Spoof</b> and <b>Edit</b>. Watch sensors tick and the checklist resolve to <b>SEALED</b> or <b>REFUSED</b> with the failed check named.</li>
+        <li>Tap <b>Send to desk</b> (or download the <code>.frameseal.json</code>).</li>
+        <li>Open <a href="desk.html"><b>Laptop (Review Desk)</b></a>. Accept the sealed card; refused cards stay blocked. Hit <b>Verify</b>, then <b>Tamper a copy</b> to watch the desk catch an edited card.</li>
+        <li>Optional: switch to <b>Live sensors</b> on a phone — real rear camera, accelerometer step count and GPS. Walk two steps toward the subject, then seal.</li>
+      </ol>
+    </div>
+    <div class="panel">
+      <span class="eyebrow">Who it's for</span>
+      <h3 style="margin-top:8px">The reviewer, not the worker</h3>
+      <p style="color:#d8d1c2;margin:0">The person who has to sign off on a photo — pay a wage, close a ward ticket, release a delivery — today has nothing but a JPEG and trust. FrameSeal gives them a card that says <i>how</i> the frame was captured, and refuses when the phone's own sensors disagree.</p>
+      <div class="who"><span class="chip">Wage release · worksite photos</span><span class="chip">Ward ticket closure</span><span class="chip">Delivery attempt proof</span></div>
+      <p style="color:var(--muted);font-size:13px;margin:16px 0 0">Prototype scope: one site (Ward 14 · garbage heap), one job (Close garbage ticket), four cards, offline seal, review desk.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-h"><div><span class="eyebrow">Why now</span><h2>Photo proof is already being gamed.</h2></div></div>
+    <div class="evidence">
+      <div class="ev"><div class="big">6,595 / 6,709</div><p>Latehar NMMS review: worksite photos found fraudulent or duplicated — and 75 had already been approved.</p><cite>Times of India · Sep 2026</cite></div>
+      <div class="ev"><div class="big">Wiped &amp; spoofed</div><p>Gurugram: one worker AI-wiped a garbage heap from a photo; another spoofed GPS from Jhajjar.</p><cite>The Print · Jul 2026</cite></div>
+      <div class="ev"><div class="big">25–40% RTO</div><p>Fake delivery attempts are a named driver of India's 25–40% e-commerce return-to-origin rate.</p><cite>Seller logistics reports · 2026</cite></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>FrameSeal · web prototype for the iQOO Hackathon 2026 Grand Finale. Production target: native Android.</span>
+    <span><a href="https://github.com/aneek22112007-tech/frameseal">Source on GitHub</a> · no analytics · no cloud calls</span>
+  </div>
+</footer>
+<script src="assets/core.js"></script>
+<script>FS.bindNetChip(document.getElementById('net')); FS.registerSW();</script>
+</body>
+</html>

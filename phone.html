@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>FrameSeal · Phone (Seal)</title>
+<meta name="theme-color" content="#0c0b09">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="phone-page">
+<div class="stage">
+  <aside class="side">
+    <a class="brand" href="index.html"><img class="logo" src="assets/logo.svg" alt=""> Frame<b>Seal</b></a>
+    <h1>The phone decides before the photo leaves.</h1>
+    <p>Captured live, at this spot, of this scene — or it refuses and names the failed check. Nothing in the seal path touches the network.</p>
+    <ol class="steps">
+      <li><b>Judge mode</b> runs the four scripted outcomes on a built-in Ward 14 scene.</li>
+      <li>Tap <b>Pass</b>, <b>Gallery</b>, <b>Spoof</b>, <b>Edit</b>. Watch the sensor tiles and checklist resolve.</li>
+      <li><b>Send to desk</b>, then open the <a href="desk.html" target="_blank" rel="noopener">Review Desk ↗</a> in this browser.</li>
+      <li>On a phone, switch to <b>Live sensors</b>: real rear camera, accelerometer steps and GPS.</li>
+    </ol>
+  </aside>
+
+  <div class="device">
+    <div class="screen">
+      <div class="statusbar"><span id="clock">--:--</span><span class="r">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="#f4efe4"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1" opacity=".35"/></svg>
+        <svg width="24" height="11" viewBox="0 0 24 11"><rect x=".5" y=".5" width="20" height="10" rx="3" fill="none" stroke="#f4efe4" opacity=".6"/><rect x="2" y="2" width="14" height="7" rx="1.5" fill="#f5b700"/><rect x="21.5" y="3.5" width="2" height="4" rx="1" fill="#f4efe4" opacity=".6"/></svg></span></div>
+      <div class="app" id="app">
+        <div class="apphead">
+          <a class="brand" href="index.html"><img class="logo" src="assets/logo.svg" alt="" style="width:26px;height:26px"> Frame<b>Seal</b></a>
+          <a class="home" href="desk.html">Desk →</a>
+        </div>
+        <div class="jobbar">
+          <div><div class="t">Job</div><div class="v">Close garbage ticket</div></div>
+          <div style="text-align:right"><div class="t">Site</div><div class="v">Ward 14 · garbage heap</div></div>
+        </div>
+        <div class="netrow">
+          <span class="chip" id="net"></span>
+          <div class="seg" role="tablist" aria-label="Mode">
+            <button id="mSim" role="tab">Judge mode</button>
+            <button id="mLive" role="tab">Live sensors</button>
+          </div>
+        </div>
+
+        <div class="vf" id="vf">
+          <canvas id="vfc" width="480" height="360" aria-label="Viewfinder"></canvas>
+          <video id="video" playsinline muted autoplay class="hidden"></video>
+          <div class="corners"></div>
+          <div class="ov"><span class="pill idle" id="pLive"><span class="dot"></span><span>READY</span></span><span class="pill" id="pGnss">GNSS —</span></div>
+          <div class="bot"><span class="pill" id="pSteps">0 steps</span><span class="pill" id="pSrc">SIM CAMERA</span></div>
+          <div class="msg" id="vfMsg"></div>
+          <div class="stampbig" id="stamp">SEALED</div>
+        </div>
+
+        <div class="sensors">
+          <div class="sensor"><div class="k">Steps</div><div class="v" id="sSteps">0</div><div class="s" id="sDist">~0.0 m</div></div>
+          <div class="sensor"><div class="k">IMU σ²</div><div class="v" id="sVar">—</div><canvas id="spark" width="200" height="40"></canvas></div>
+          <div class="sensor"><div class="k">GNSS</div><div class="v" id="sAcc">—</div><div class="s" id="sGnss">no fix</div></div>
+        </div>
+
+        <div class="checks" id="checks"></div>
+
+        <div class="controls" id="simControls">
+          <div class="scen" id="scen">
+            <button class="pass" data-k="PASS"><span class="t">SEAL</span><b>Pass</b><small>Walk 2 steps · live · GNSS agrees</small></button>
+            <button class="fail" data-k="GALLERY"><span class="t">REFUSE</span><b>Gallery</b><small>Old file, no capture motion</small></button>
+            <button class="fail" data-k="SPOOF"><span class="t">REFUSE</span><b>Spoof</b><small>Mock GPS on · phone still</small></button>
+            <button class="fail" data-k="EDIT"><span class="t">REFUSE</span><b>Edit</b><small>Heap AI-wiped from after-photo</small></button>
+          </div>
+          <p class="hint">Judge mode replays sensor traces on a built-in scene. The SHA-256, dHash and seal card are computed for real, on this device.</p>
+        </div>
+
+        <div class="controls hidden" id="liveControls">
+          <div class="liveacts">
+            <button class="btn primary wide" id="bStart">▶ Start live capture</button>
+            <button class="btn" id="bSeal" disabled>◉ Seal frame</button>
+            <button class="btn ghost" id="bReset">↺ Reset</button>
+            <button class="btn ghost wide" id="bGallery">Try gallery upload</button>
+          </div>
+          <p class="hint" id="liveHint">Point the rear camera at the subject, tap Start, <b>walk ~2 steps toward it</b>, then tap Seal within 20 s. Needs HTTPS + camera, motion and location permission. Prefer the scripted demo? Switch to Judge mode.</p>
+        </div>
+
+        <div class="result" id="result">
+          <div class="vd" id="rVd">SEALED</div>
+          <div class="fc" id="rFc"></div>
+          <div class="kv">
+            <span>Card</span><code id="rId"></code>
+            <span>SHA-256</span><code id="rSha"></code>
+            <span>dHash</span><code id="rDh"></code>
+            <span>Time</span><code id="rTs"></code>
+          </div>
+          <div class="acts">
+            <button class="btn primary" id="bSend">Send to desk</button>
+            <button class="btn" id="bDl">Download</button>
+            <button class="btn" id="bCopy">Copy JSON</button>
+            <button class="btn ghost wide hidden" id="bTamper">Tamper test: AI-wipe the heap from this frame</button>
+            <a class="btn ghost wide" href="desk.html" target="_blank" rel="noopener">Open Review Desk ↗</a>
+          </div>
+        </div>
+
+        <div class="appfoot">On-device only · 0 cloud calls in the seal path<br>Laptop reviews. It cannot mint a seal.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="file" id="galFile" accept="image/*" hidden>
+<script src="assets/core.js"></script>
+<script src="assets/phone.js"></script>
+</body>
+</html>

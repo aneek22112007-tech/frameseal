@@ -1,0 +1,10 @@
+{
+  "name": "FrameSeal",
+  "short_name": "FrameSeal",
+  "description": "Seal the frame on the phone before it can be swapped, spoofed, or edited.",
+  "start_url": "phone.html",
+  "display": "standalone",
+  "background_color": "#0c0b09",
+  "theme_color": "#0c0b09",
+  "icons": [{ "src": "assets/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
